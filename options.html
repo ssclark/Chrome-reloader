@@ -2,14 +2,15 @@
 <head><title>Reloader options</title></head>
 <script type="text/javascript">
 
-// Saves options to localStorage.
+// Saves options to background page variable. Should probably use local storage
 function save_options() {
   var page = document.myform.inputbox.value;
 	chrome.extension.getBackgroundPage().setPageToLoad(page);
 	document.getElementById('currentPage').innerHTML = "Page to reload is set to: " + page;
 }
 
-// Restores select box state to saved value from localStorage.
+// Loads current page setting from background page variable. Should probably use
+// local storage
 function restore_options() {
   var page = chrome.extension.getBackgroundPage().getPageToLoad();
 	document.getElementById('currentPage').innerHTML = "Page to reload is set to: " + page;
