@@ -1,0 +1,12 @@
+{
+  "name": "Reloader",
+  "version": "1.0",
+  "description": "Page reloader for power capture.",
+  "background_page": "background.html",
+  "permissions": ["tabs", "http://*/*"],
+"options_page": "options.html",
+"browser_action": {
+		  "name": "Start trace to capture.",
+		  "default_icon": "icon.png"
+}
+}

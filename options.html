@@ -1,0 +1,32 @@
+<html>
+<head><title>Reloader options</title></head>
+<script type="text/javascript">
+
+// Saves options to localStorage.
+function save_options() {
+  var page = document.myform.inputbox.value;
+	chrome.extension.getBackgroundPage().setPageToLoad(page);
+	document.getElementById('currentPage').innerHTML = "Page to reload is set to: " + page;
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+  var page = chrome.extension.getBackgroundPage().getPageToLoad();
+	document.getElementById('currentPage').innerHTML = "Page to reload is set to: " + page;
+}
+
+</script>
+
+<body onload="restore_options()">
+<body>
+
+<FORM NAME="myform" ACTION="javascript:save_options()" METHOD="GET">Enter full URL of page to load<BR>
+  <INPUT TYPE="text" NAME="inputbox"><P>
+</FORM>
+<button onclick="save_options()">Save</button>
+<div id="currentPage">
+<br>
+<p>Saved page goes here.</p>
+</div>
+</body>
+</html>

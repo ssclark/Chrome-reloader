@@ -1,0 +1,44 @@
+<script>
+
+var pageToLoad = "http://www.google.com";
+var focusedWindowId = null;
+
+function setPageToLoad(page) {
+	pageToLoad = page;
+}
+
+function getPageToLoad() {
+	return pageToLoad;
+}
+
+function load() {
+	chrome.windows.getLastFocused(function(focusedWindow) {
+		focusedWindowId = focusedWindow.id;
+		chrome.tabs.getSelected(focusedWindowId, function(tab) {
+			chrome.tabs.update(tab.id, {url: pageToLoad})
+		});
+	});
+}
+
+function openIncognito() {
+	chrome.windows.create({'incognito': true, 'type': 'normal'})
+}
+
+function closeIncognito() {
+	chrome.windows.remove(focusedWindowId);
+}
+
+function startTrace() {
+	// Open the incognito window to load the page in.
+	openIncognito();
+	// Wait ten seconds and then load the page.
+	setTimeout("load()", 10000);
+	// Wait 20 seconds before closing the window.
+	setTimeout("closeIncognito()", 30000);
+}
+
+// Called when the user clicks on the browser action.
+  chrome.browserAction.onClicked.addListener(function(tab) {
+	setInterval("startTrace()", 40000);
+  });
+</script>
